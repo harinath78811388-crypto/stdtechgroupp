@@ -1,20 +1,74 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# STDTech Group Pvt Ltd
 
-# Run and deploy your AI Studio app
+> **Technology | Innovation | Impact**
 
-This contains everything you need to run your app locally.
+STDTech Group Pvt Ltd is a technology company focused on building software products, delivering digital solutions, developing AI-powered technologies, and providing practical technology education.
 
-View your app in AI Studio: https://ai.studio/apps/f0c372dc-008a-4d00-adf5-112e123e23c8
+## 🌐 About STDTech Group
 
-## Run Locally
+STDTech Group aims to use technology to create practical solutions for businesses, students, developers, and communities.
 
-**Prerequisites:**  Node.js
+Our work focuses on:
 
+- 💻 Software & Web Development
+- 🤖 Artificial Intelligence & Machine Learning
+- ☁️ Cloud & Digital Solutions
+- 🛡️ Cybersecurity & Secure Systems
+- 🎓 Technology Education & Skill Development
+- 🚀 Innovative Technology Products
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🎯 Mission
+
+> To empower people, businesses, and communities through innovative technology.
+
+## 🔭 Vision
+
+To become a technology company that creates new opportunities for businesses, students, and communities through innovation, AI, and digital solutions while making technology more accessible and impactful.
+
+## 🛠️ Technology Stack
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express.js
+- TypeScript
+
+### Database
+- PostgreSQL
+
+### Security
+- Secure authentication
+- Password hashing
+- JWT-based authentication
+- Role-based access control
+- QR-based verification
+- Security-focused API design
+
+## 🚀 Platform Features
+
+The STDTech platform is designed to support:
+
+- 👤 User authentication
+- 🔐 Secure login system
+- 🎓 Student & staff portals
+- 🏢 Admin dashboard
+- 📜 Certificate generation
+- 🔎 Certificate verification
+- 📱 QR-based certificate verification
+- 📊 Management dashboards
+- 🤖 AI-powered technology solutions
+- 🌐 Digital services
+
+## 📜 Certificate Verification
+
+STDTech Group can provide digitally verifiable certificates.
+
+Example certificate ID:
+
+```text
+STDT-2026-00001
