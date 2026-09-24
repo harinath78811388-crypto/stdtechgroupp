@@ -33,7 +33,7 @@ export default function CertificateModal({
 
     // Generate QR Code onto canvas
     if (qrCanvasRef.current) {
-      const publicUrl = `https://stdtechgroup.com/verify/${certificate.certificateId}`;
+      const publicUrl = `${window.location.origin}/verify/${certificate.certificateId}`;
       QRCode.toCanvas(
         qrCanvasRef.current,
         publicUrl,
