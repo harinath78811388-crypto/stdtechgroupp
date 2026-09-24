@@ -1,12 +1,11 @@
 import express from 'express';
 import crypto from 'node:crypto';
 import path from 'path';
-import { fileURLToPath } from 'url';
+
 import { createServer as createViteServer } from 'vite';
 import { store } from './server/data';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
 const PUBLIC_APP_URL = (process.env.APP_URL || 'https://stdtechgroup.com').replace(/\/$/, '');
 
 function hashPassword(password: string, salt = crypto.randomBytes(16).toString('hex')) {
@@ -23,7 +22,7 @@ function verifyPassword(password: string, stored: string) {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // Middleware
   app.use(express.json());
