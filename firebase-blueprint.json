@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "inquiry": {
+      "title": "Contact Inquiry",
+      "description": "User inquiries submitted via the contact form",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 25 },
+        "service": { "type": "string", "maxLength": 100 },
+        "message": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["new", "in-review", "contacted", "archived"] }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    },
+    "jobApplication": {
+      "title": "Career Application",
+      "description": "Candidate job applications submitted through the careers portal",
+      "type": "object",
+      "properties": {
+        "jobId": { "type": "string", "maxLength": 50 },
+        "fullName": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 25 },
+        "experience": { "type": "string", "maxLength": 50 },
+        "portfolioUrl": { "type": "string", "maxLength": 250 },
+        "coverLetter": { "type": "string", "maxLength": 3000 },
+        "status": { "type": "string", "enum": ["submitted", "reviewing", "shortlisted", "rejected"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["jobId", "fullName", "email", "createdAt"]
+    },
+    "certificate": {
+      "title": "Academy Certificate",
+      "description": "Issued digital completion certificates verifiable by serial or QR code",
+      "type": "object",
+      "properties": {
+        "certificateId": { "type": "string", "maxLength": 60 },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "studentEmail": { "type": "string", "maxLength": 150 },
+        "courseTitle": { "type": "string", "maxLength": 150 },
+        "courseCode": { "type": "string", "maxLength": 50 },
+        "grade": { "type": "string", "maxLength": 20 },
+        "issueDate": { "type": "string", "maxLength": 30 },
+        "verificationUrl": { "type": "string", "maxLength": 250 },
+        "valid": { "type": "boolean" },
+        "authorizedSignatory": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["certificateId", "studentName", "courseTitle", "issueDate", "valid"]
+    }
+  },
+  "firestore": {
+    "/inquiries/{inquiryId}": {
+      "schema": "inquiry",
+      "description": "Inbound business inquiries and message requests"
+    },
+    "/job_applications/{applicationId}": {
+      "schema": "jobApplication",
+      "description": "Job applicant submissions for open career positions"
+    },
+    "/certificates/{certificateId}": {
+      "schema": "certificate",
+      "description": "Academy course completion certificates"
+    }
+  }
+}
