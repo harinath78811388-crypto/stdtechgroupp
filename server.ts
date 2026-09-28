@@ -799,7 +799,7 @@ async function startServer() {
   });
 
   // STUDENT DASHBOARD DATA
-  app.get('/api/student/data', (req, res) => {
+  app.get('/api/student/data', async (req, res) => {
     res.json({
       student: store.users.find((u) => u.role === 'student'),
       enrollments: store.studentEnrollments,
