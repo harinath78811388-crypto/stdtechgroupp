@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  /* Custom styled scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* ========================================================================= */
+/* THEME: MINT GREEN + BLUSH PINK 🩷 + LUMINOUS WHITE (DEFAULT)             */
+/* ========================================================================= */
+[data-theme="mint-pink-white"] {
+  background-color: #f8faf9 !important;
+  background-image: 
+    radial-gradient(circle at 5% 5%, rgba(167, 243, 208, 0.55) 0px, transparent 38%),
+    radial-gradient(circle at 95% 8%, rgba(252, 231, 243, 0.7) 0px, transparent 42%),
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.95) 0px, transparent 55%),
+    radial-gradient(circle at 90% 65%, rgba(167, 243, 208, 0.45) 0px, transparent 38%),
+    radial-gradient(circle at 10% 75%, rgba(251, 207, 232, 0.55) 0px, transparent 42%),
+    radial-gradient(circle at 50% 95%, rgba(209, 250, 229, 0.5) 0px, transparent 45%),
+    linear-gradient(180deg, #f0fdf4 0%, #ffffff 30%, #fdf2f8 65%, #f0fdf4 100%) !important;
+  background-attachment: fixed !important;
+  color: #0f172a !important;
+}
+
+/* Typography contrast adjustments in Mint-Pink-White theme */
+[data-theme="mint-pink-white"] h1,
+[data-theme="mint-pink-white"] h2,
+[data-theme="mint-pink-white"] h3,
+[data-theme="mint-pink-white"] h4,
+[data-theme="mint-pink-white"] h5,
+[data-theme="mint-pink-white"] h6 {
+  color: #0f172a;
+}
+
+[data-theme="mint-pink-white"] .text-white {
+  color: #0f172a !important;
+}
+
+[data-theme="mint-pink-white"] .text-slate-100 {
+  color: #0f172a !important;
+}
+
+[data-theme="mint-pink-white"] .text-slate-200,
+[data-theme="mint-pink-white"] .text-slate-300 {
+  color: #334155 !important;
+}
+
+[data-theme="mint-pink-white"] .text-slate-400 {
+  color: #475569 !important;
+}
+
+[data-theme="mint-pink-white"] .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Emerald / Mint accent on light background needs deeper contrast */
+[data-theme="mint-pink-white"] .text-emerald-400 {
+  color: #059669 !important;
+}
+
+[data-theme="mint-pink-white"] .text-emerald-300 {
+  color: #047857 !important;
+}
+
+[data-theme="mint-pink-white"] .text-pink-400 {
+  color: #db2777 !important;
+}
+
+[data-theme="mint-pink-white"] .text-pink-300 {
+  color: #be185d !important;
+}
+
+[data-theme="mint-pink-white"] .text-blue-400 {
+  color: #2563eb !important;
+}
+
+/* Frosted glass cards & containers */
+[data-theme="mint-pink-white"] .bg-slate-900,
+[data-theme="mint-pink-white"] .bg-slate-900\/90,
+[data-theme="mint-pink-white"] .bg-slate-900\/80,
+[data-theme="mint-pink-white"] .bg-slate-900\/60,
+[data-theme="mint-pink-white"] .bg-slate-900\/50,
+[data-theme="mint-pink-white"] .bg-slate-900\/40 {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.07), 0 2px 8px -1px rgba(236, 72, 153, 0.05) !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
+}
+
+[data-theme="mint-pink-white"] .bg-slate-950,
+[data-theme="mint-pink-white"] .bg-slate-950\/90,
+[data-theme="mint-pink-white"] .bg-slate-950\/80,
+[data-theme="mint-pink-white"] .bg-slate-950\/60 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+[data-theme="mint-pink-white"] .border-slate-800,
+[data-theme="mint-pink-white"] .border-slate-800\/80,
+[data-theme="mint-pink-white"] .border-slate-800\/50,
+[data-theme="mint-pink-white"] .border-slate-700 {
+  border-color: rgba(226, 232, 240, 0.95) !important;
+}
+
+[data-theme="mint-pink-white"] .bg-slate-800,
+[data-theme="mint-pink-white"] .bg-slate-800\/80 {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="mint-pink-white"] .hover\:bg-slate-800:hover,
+[data-theme="mint-pink-white"] .hover\:bg-slate-900:hover {
+  background-color: #ffffff !important;
+  border-color: rgba(52, 211, 153, 0.5) !important;
+  box-shadow: 0 10px 25px -3px rgba(16, 185, 129, 0.12), 0 4px 10px -2px rgba(244, 114, 182, 0.08) !important;
+}
+
+/* Header & Microbar in Mint-Pink-White */
+[data-theme="mint-pink-white"] header {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  border-bottom-color: rgba(226, 232, 240, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+[data-theme="mint-pink-white"] header .bg-gradient-to-r {
+  background-image: linear-gradient(90deg, rgba(209, 250, 229, 0.6) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(252, 231, 243, 0.65) 100%) !important;
+  border-bottom-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+/* Footer in Mint-Pink-White */
+[data-theme="mint-pink-white"] footer {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-top-color: rgba(226, 232, 240, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* Primary buttons text preservation */
+[data-theme="mint-pink-white"] .bg-gradient-to-r.from-emerald-500 span,
+[data-theme="mint-pink-white"] .bg-gradient-to-r.from-emerald-500 svg,
+[data-theme="mint-pink-white"] .bg-emerald-500 span,
+[data-theme="mint-pink-white"] .bg-emerald-500 svg {
+  color: #022c22 !important;
+}
+
+/* Secondary outline buttons */
+[data-theme="mint-pink-white"] button.bg-slate-900,
+[data-theme="mint-pink-white"] a.bg-slate-900 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="mint-pink-white"] button.bg-slate-900:hover,
+[data-theme="mint-pink-white"] a.bg-slate-900:hover {
+  background-color: #f8fafc !important;
+  border-color: #10b981 !important;
+  color: #047857 !important;
+}
+
+/* Badges styling */
+[data-theme="mint-pink-white"] .bg-emerald-950\/60,
+[data-theme="mint-pink-white"] .bg-emerald-950 {
+  background-color: rgba(209, 250, 229, 0.8) !important;
+  color: #065f46 !important;
+  border-color: rgba(110, 231, 183, 0.8) !important;
+}
+
+[data-theme="mint-pink-white"] .bg-pink-950\/60,
+[data-theme="mint-pink-white"] .bg-pink-950 {
+  background-color: rgba(252, 231, 243, 0.8) !important;
+  color: #9d174d !important;
+  border-color: rgba(244, 114, 182, 0.6) !important;
+}
+
+[data-theme="mint-pink-white"] .bg-blue-950\/60,
+[data-theme="mint-pink-white"] .bg-blue-950 {
+  background-color: rgba(219, 234, 254, 0.8) !important;
+  color: #1e40af !important;
+  border-color: rgba(147, 197, 253, 0.6) !important;
+}
+
+/* Input elements */
+[data-theme="mint-pink-white"] input,
+[data-theme="mint-pink-white"] textarea,
+[data-theme="mint-pink-white"] select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="mint-pink-white"] input::placeholder,
+[data-theme="mint-pink-white"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Certificate viewer in mint-pink-white */
+[data-theme="mint-pink-white"] .bg-slate-950.border-2 {
+  background-color: #ffffff !important;
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1) !important;
+}
+
+/* ========================================================================= */
+/* THEME: PURE MINT & CRISP WHITE                                            */
+/* ========================================================================= */
+[data-theme="mint-white"] {
+  background-color: #f0fdf4 !important;
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(167, 243, 208, 0.6) 0px, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(209, 250, 229, 0.5) 0px, transparent 45%),
+    radial-gradient(circle at 50% 50%, #ffffff 0px, transparent 60%),
+    radial-gradient(circle at 90% 90%, rgba(167, 243, 208, 0.6) 0px, transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(209, 250, 229, 0.5) 0px, transparent 45%),
+    linear-gradient(180deg, #ecfdf5 0%, #ffffff 50%, #ecfdf5 100%) !important;
+  background-attachment: fixed !important;
+  color: #0f172a !important;
+}
+
+[data-theme="mint-white"] h1,
+[data-theme="mint-white"] h2,
+[data-theme="mint-white"] h3,
+[data-theme="mint-white"] h4 {
+  color: #0f172a;
+}
+
+[data-theme="mint-white"] .text-white {
+  color: #0f172a !important;
+}
+
+[data-theme="mint-white"] .text-slate-100 {
+  color: #0f172a !important;
+}
+
+[data-theme="mint-white"] .text-slate-200,
+[data-theme="mint-white"] .text-slate-300 {
+  color: #334155 !important;
+}
+
+[data-theme="mint-white"] .text-slate-400 {
+  color: #475569 !important;
+}
+
+[data-theme="mint-white"] .bg-slate-900,
+[data-theme="mint-white"] .bg-slate-900\/90,
+[data-theme="mint-white"] .bg-slate-900\/80,
+[data-theme="mint-white"] .bg-slate-900\/60 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px);
+  border-color: rgba(167, 243, 208, 0.5) !important;
+  box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.08) !important;
+}
+
+[data-theme="mint-white"] .bg-slate-950 {
+  background-color: #ffffff !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+[data-theme="mint-white"] header {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-bottom-color: rgba(167, 243, 208, 0.4) !important;
+}
+
+[data-theme="mint-white"] footer {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top-color: rgba(167, 243, 208, 0.4) !important;
+}
+
+/* ========================================================================= */
+/* THEME: DARK (DEEP TECH SLATE)                                             */
+/* ========================================================================= */
+[data-theme="dark"] {
+  background-color: #020617 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Print utilities for official certificate downloads */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .certificate-print-container {
+    box-shadow: none !important;
+    border: 2px solid #0f172a !important;
+    page-break-inside: avoid;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px !important;
+  }
+}
+
