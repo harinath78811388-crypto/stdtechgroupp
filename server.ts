@@ -551,50 +551,58 @@ async function startServer() {
   });
 
   // Vite middleware for development vs Static file serving for production
- // Vite middleware for development vs Static file serving for production
-if (process.env.NODE_ENV !== 'production') {
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    appType: 'spa',
-  });
-  app.use(vite.middlewares);
-} else {
-  const distPath = path.join(process.cwd(), 'dist');
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa',
+    });
+    app.use(vite.middlewares);
+  } else {
+    const distPath = path.join(process.cwd(), 'dist');
 
-  // Serve static files
-  app.use(express.static(distPath));
+    // Serve static files
+    app.use(express.static(distPath));
 
-  // Google Search Console / SEO Sitemap
-  app.get('/sitemap.xml', (req, res) => {
-    const baseUrl = PUBLIC_APP_URL;
+    // Google Search Console / SEO Sitemap
+    app.get('/sitemap.xml', (req, res) => {
+      const baseUrl = PUBLIC_APP_URL;
 
-    const urls = [
-      '/',
-      '/about',
-      '/services',
-      '/products',
-      '/portfolio',
-      '/training',
-      '/careers',
-      '/leadership',
-      '/blog',
-      '/contact',
-      '/privacy-policy',
-      '/terms',
-    ];
+      const urls = [
+        '/',
+        '/about',
+        '/services',
+        '/products',
+        '/portfolio',
+        '/training',
+        '/careers',
+        '/leadership',
+        '/blog',
+        '/contact',
+        '/privacy-policy',
+        '/terms',
+      ];
 
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((url) => `  <url>
     <loc>${baseUrl}${url}</loc>
   </url>`).join('\n')}
 </urlset>`;
 
-    res.type('application/xml').send(sitemap);
-  });
+      res.type('application/xml').send(sitemap);
+    });
 
-  // React SPA fallback
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
+    // React SPA fallback
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[STDTech Server] Running on http://localhost:${PORT}`);
   });
 }
+
+startServer().catch((err) => {
+  console.error('[STDTech Server] Error starting server:', err);
+});
