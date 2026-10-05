@@ -6,7 +6,7 @@ import { createServer as createViteServer } from 'vite';
 import { store } from './server/data';
 
 
-const PUBLIC_APP_URL = (process.env.APP_URL || 'https://stdtechgroup.com').replace(/\/$/, '');
+const PUBLIC_APP_URL = (process.env.APP_URL || 'https://stdtechgroup.onrender.com').replace(/\/$/, '');
 
 function hashPassword(password: string, salt = crypto.randomBytes(16).toString('hex')) {
   const hash = crypto.scryptSync(password, salt, 64).toString('hex');
@@ -551,25 +551,50 @@ async function startServer() {
   });
 
   // Vite middleware for development vs Static file serving for production
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
-  }
+ // Vite middleware for development vs Static file serving for production
+if (process.env.NODE_ENV !== 'production') {
+  const vite = await createViteServer({
+    server: { middlewareMode: true },
+    appType: 'spa',
+  });
+  app.use(vite.middlewares);
+} else {
+  const distPath = path.join(process.cwd(), 'dist');
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[STDTech Server] Running on http://localhost:${PORT}`);
+  // Serve static files
+  app.use(express.static(distPath));
+
+  // Google Search Console / SEO Sitemap
+  app.get('/sitemap.xml', (req, res) => {
+    const baseUrl = PUBLIC_APP_URL;
+
+    const urls = [
+      '/',
+      '/about',
+      '/services',
+      '/products',
+      '/portfolio',
+      '/training',
+      '/careers',
+      '/leadership',
+      '/blog',
+      '/contact',
+      '/privacy-policy',
+      '/terms',
+    ];
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((url) => `  <url>
+    <loc>${baseUrl}${url}</loc>
+  </url>`).join('\n')}
+</urlset>`;
+
+    res.type('application/xml').send(sitemap);
+  });
+
+  // React SPA fallback
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
   });
 }
-
-startServer().catch((err) => {
-  console.error('[STDTech Server] Error starting server:', err);
-});
