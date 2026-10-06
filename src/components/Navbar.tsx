@@ -23,6 +23,7 @@ interface NavbarProps {
   onLogout: () => void;
   onOpenLoginModal?: () => void;
   onOpenAuthModal?: () => void;
+  onOpenApplyModal?: () => void;
   onOpenRoleSwitcher?: () => void;
   onQuickRoleSwitch?: (role: 'admin' | 'staff' | 'student' | 'customer') => void;
   theme?: 'mint-pink-white' | 'mint-white' | 'dark';
@@ -38,6 +39,7 @@ export default function Navbar({
   onLogout,
   onOpenLoginModal,
   onOpenAuthModal,
+  onOpenApplyModal,
   onOpenRoleSwitcher,
   onQuickRoleSwitch,
   theme = 'mint-pink-white',
@@ -81,6 +83,23 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-emerald-200/80 bg-white/95 backdrop-blur-xl transition-all shadow-xs">
+      {/* Permanent team recruitment announcement */}
+      <div className="bg-gradient-to-r from-emerald-600 via-teal-500 to-pink-500 text-white border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-center gap-2 sm:gap-4 text-center">
+          <span className="text-xs sm:text-sm font-extrabold tracking-wide">
+            🚀 Interested in joining our team?
+          </span>
+          <button
+            type="button"
+            onClick={onOpenApplyModal}
+            className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[11px] sm:text-xs font-black text-emerald-700 shadow-md hover:bg-emerald-50 transition-all hover:scale-105"
+          >
+            Apply Now
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
       {/* Top micro-bar for direct contact & official domain notice */}
       <div className="bg-gradient-to-r from-emerald-50 via-white to-pink-50 border-b border-emerald-200/60 py-1.5 px-4 text-xs text-slate-700">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
