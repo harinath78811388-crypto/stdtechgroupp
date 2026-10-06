@@ -257,6 +257,10 @@ export default function App() {
         onNavigate={navigateTo}
         currentUser={currentUser}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        onOpenApplyModal={() => {
+          setSelectedJobToApply(null);
+          setIsApplyModalOpen(true);
+        }}
         onLogout={handleLogout}
         onQuickRoleSwitch={handleQuickRoleSwitch}
         theme={theme}
