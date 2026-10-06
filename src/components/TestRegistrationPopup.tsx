@@ -356,6 +356,10 @@ export default function TestRegistrationPopup() {
                         <option value="2nd Year">
                           2nd Year
                         </option>
+
+                        <option value="3rd year">
+                          3rd Year
+                        </option>
                       </select>
                     </label>
 
