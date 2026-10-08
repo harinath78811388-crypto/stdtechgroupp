@@ -179,7 +179,7 @@ export default function FounderCard({ onApplyOrContact }: FounderCardProps) {
           {
             [
               { name: 'Sudhanshu Prajapati', branch: 'Computer Science in Engneering', year: '2nd Year', role: 'Video Editor & Content Creator', team: 'Creative Media & Content Team', image: '/images/team/sudhanshu-prajapati.png', accent: 'emerald' },
-              { name: 'Jatin Singh Chauhan', branch: 'Information Technology', year: '2nd Year', role: 'Business Development & Content Creation', team: 'Business Development & Content', image: '/images/team/jatin-singh-chauhan.png', accent: 'pink' },
+              { name: 'Jatin Singh Chauhan', branch: 'Information Technology', year: '2nd Year', role: 'Business Development & Content Creation', partner: 'Business Development & Content', image: '/images/team/jatin-singh-chauhan.png', accent: 'pink' },
               { name: 'Anuragh', branch: 'Information Technology', year: '2nd Year', role: 'AI, Design & Digital Media', team: 'AI, Design & Digital Media', image: '/images/team/anuragh.png', accent: 'teal' },
             ].map((member) => (
               <div key={member.name} className="group relative overflow-hidden rounded-3xl bg-white border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
