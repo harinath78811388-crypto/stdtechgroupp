@@ -5,7 +5,7 @@ import AuthModal from './components/AuthModal';
 import ApplyModal from './components/ApplyModal';
 import CertificateModal from './components/CertificateModal';
 import EnrollModal from './components/EnrollModal';
-import UnitedTestExamPopup from './components/UnitedTestExamPopup';
+import UnitedTestExamPopup from './components/UnitedTestExamPopup.tsx';
 import CertificateVerificationView from './components/CertificateVerificationView';
 
 // Dashboards
