@@ -5,7 +5,7 @@ import AuthModal from './components/AuthModal';
 import ApplyModal from './components/ApplyModal';
 import CertificateModal from './components/CertificateModal';
 import EnrollModal from './components/EnrollModal';
-import TestRegistrationPopup from './components/TestRegistrationPopup';
+import UnitedTestExamPopup from './components/UnitedTestExamPopup';
 import CertificateVerificationView from './components/CertificateVerificationView';
 
 // Dashboards
@@ -402,8 +402,8 @@ export default function App() {
         )}
       </main>
 
-      {/* Free Quiz Registration Popup */}
-      <TestRegistrationPopup />
+      {/* All United Test Examination Popup */}
+      <UnitedTestExamPopup />
 
       {/* Footer (Rendered on all pages for consistent site access and legal links) */}
       <Footer onNavigate={navigateTo} />
