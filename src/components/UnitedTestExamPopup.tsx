@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import "./STDTechExamPopup.css";
+import "./UnitedTestExamPopup.css";
 
 type Question = { text: string; entry: string; options: string[] };
 type Group = { title: string; questions: Question[] };
@@ -140,7 +140,7 @@ export default function STDTechExamPopup() {
   }, [seconds, stage]);
 
   useEffect(() => {
-    if (stage !== "exam") return;
+    if (stage !== "exam" || startedAt === null) return;
     const onVisibility = () => {
       if (document.visibilityState === "hidden" && !lock.current) {
         const next = violationCount + 1;
@@ -153,7 +153,7 @@ export default function STDTechExamPopup() {
     };
     document.addEventListener("visibilitychange", onVisibility);
     return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, [stage, violationCount, roll]);
+  }, [stage, violationCount, roll, startedAt]);
 
   const chooseAnswer = (entry: string, value: string) => setAnswers(prev => ({ ...prev, [entry]: value }));
 
@@ -171,7 +171,7 @@ export default function STDTechExamPopup() {
     <div className="stx-root">
       {stage === "banner" && (
         <div className="stx-overlay" role="dialog" aria-modal="true" aria-label="For All United Test">
-          <button className="stx-close" onClick={() => setStage("exam")} aria-label="Close banner">×</button>
+          <button className="stx-close" onClick={() => setStage("banner")} aria-label="Close banner">×</button>
           <button className="stx-banner-button" onClick={() => {
             const saved = localStorage.getItem(ATTEMPT_KEY_PREFIX + roll.trim().toLowerCase());
             if (roll.trim() && (saved === "submitted" || saved === "disqualified")) {
@@ -182,7 +182,7 @@ export default function STDTechExamPopup() {
               setStage("exam");
             }
           }}>
-            <img src="/images/STDtech-United-Test-Announcement.png" alt="For All United Test — Click Here" className="stx-banner" />
+            <img src="/images/all-united-test-2026-banner.png" alt="For All United Test — Click Here" className="stx-banner" />
             <span className="stx-banner-caption">Click the banner to start the examination</span>
           </button>
         </div>
