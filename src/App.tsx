@@ -5,7 +5,6 @@ import AuthModal from './components/AuthModal';
 import ApplyModal from './components/ApplyModal';
 import CertificateModal from './components/CertificateModal';
 import EnrollModal from './components/EnrollModal';
-import UnitedTestExamPopup from './components/UnitedTestExamPopup.tsx';
 import CertificateVerificationView from './components/CertificateVerificationView';
 
 // Dashboards
@@ -251,6 +250,11 @@ export default function App() {
         theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'text-slate-900'
       }`}
     >
+      <div style={{background:'linear-gradient(90deg,#d9fff0,#ffe5f2)',borderBottom:'1px solid #b9e7d8',padding:'10px 16px',textAlign:'center',position:'relative',zIndex:40}}>
+        <a href="/exam.html" style={{display:'inline-block',background:'#17677c',color:'#fff',fontWeight:900,padding:'10px 22px',borderRadius:999,textDecoration:'none',boxShadow:'0 5px 16px #17677c33'}}>
+          Click Here for Starting Examination →
+        </a>
+      </div>
       {/* Navigation Header */}
       <Navbar
         currentPage={currentPage}
@@ -401,9 +405,6 @@ export default function App() {
           />
         )}
       </main>
-
-      {/* All United Test Examination Popup */}
-      <UnitedTestExamPopup />
 
       {/* Footer (Rendered on all pages for consistent site access and legal links) */}
       <Footer onNavigate={navigateTo} />
