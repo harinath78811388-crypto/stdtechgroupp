@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STDTech | For All United Test</title>
+<style>
+:root{--teal:#17677c;--mint:#dff8ee;--pink:#fce7f3;--ink:#152a38;--line:#d9e8e2}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(135deg,#f0fffa,#fff5fa);color:var(--ink)}
+header{position:sticky;top:0;z-index:5;background:#fffE;border-bottom:1px solid var(--line);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;backdrop-filter:blur(10px)}
+.brand{font-weight:900;color:var(--teal)}.brand small{display:block;font-size:11px;letter-spacing:1.5px;color:#60717a}
+.timer{background:var(--mint);border:1px solid #bde8d7;padding:9px 12px;border-radius:10px;font-weight:800;white-space:nowrap}
+main{max-width:950px;margin:22px auto;padding:0 14px 50px}.hero,.card,.result{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:15px;box-shadow:0 8px 24px #174b3b0a}
+h1{font-size:clamp(23px,4vw,32px);margin:0 0 8px}h2{font-size:21px;color:var(--teal);margin:26px 2px 12px}.muted{color:#63747c}
+label.roll{display:block;font-weight:800;margin-top:18px}input[type=text]{width:100%;max-width:420px;display:block;margin-top:8px;padding:12px;border:1px solid #c7d8d1;border-radius:10px;font:inherit}
+button{border:0;border-radius:11px;background:var(--teal);color:#fff;font-weight:800;font-size:15px;padding:12px 18px;cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}
+.q{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:12px}.q h3{font-size:16px;line-height:1.5;margin:0 0 12px}.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.opt{display:flex;align-items:flex-start;gap:9px;border:1px solid #e0ebe6;border-radius:10px;padding:10px;cursor:pointer;font-weight:500}.opt:has(input:checked){background:#edfbf5;border-color:var(--teal)}.opt input{margin-top:4px;accent-color:var(--teal)}
+.notice{padding:12px;border-radius:10px;background:#fff8e8;border:1px solid #f0dfb7;color:#72500b;line-height:1.5}.result{text-align:center;background:#effcf4;border-color:#b8e8c9;color:#14532d;padding:28px}.tick{width:76px;height:76px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:#16a34a;color:white;font-size:48px;font-weight:900;animation:pop .5s ease-out,pulse 1.8s ease-out .6s infinite}.result h1{color:#166534}@keyframes pop{0%{transform:scale(.2);opacity:0}75%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}@keyframes pulse{to{box-shadow:0 0 0 15px #16a34a00}}[hidden]{display:none!important}
+@media(max-width:620px){.opts{grid-template-columns:1fr}.hero,.card,.q{padding:14px}header{align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="brand">STDTech Group<small>TECHNOLOGY | INNOVATION | IMPACT</small></div><div id="timer" class="timer" hidden>60:00</div></header>
+<main>
+<section class="hero">
+<h1>For All United Test — 1st Year</h1>
+<p class="muted">Online MCQ Examination · 60 minutes · Please enter your roll number and start the exam.</p>
+<label class="roll">Roll Number
+<input id="roll" type="text" autocomplete="off" placeholder="Enter your roll number" maxlength="60">
+</label>
+<p><button id="start">Start Examination</button></p>
+<div id="startNotice" class="notice" hidden></div>
+<p class="muted">Keep this page open during the examination. Switching tabs/minimizing may trigger an automatic submission attempt.</p>
+</section>
+<form id="examForm" hidden>
+<div id="questions"></div>
+<section class="card"><div class="notice">Please review your answers before submitting. The browser cannot confirm Google's response in this direct-submit mode; the exam administrator must verify the response in Google Forms.</div><p><button id="submit" type="submit">Submit Examination</button></p></section>
+</form>
+<section id="result" class="result" hidden>
+<div class="tick">✓</div><h1>Application Submitted Successfully!</h1>
+<p>Your submission request has been sent. The result will be announced soon.</p>
+<p id="elapsed"></p><p class="muted">The administrator must verify that your response appears in Google Forms.</p>
+</section>
+</main>
+<script>
+const FORM_RESPONSE_URL='https://docs.google.com/forms/d/e/1FAIpQLScc240cYRAnJFTbMD0tLkVFp3Uu6oWlTETKfGA1XG9LB0kyOQ/formResponse';
+const ROLL_ENTRY='entry.896197312';
+const ATTEMPT_PREFIX='stdtech_united_test_attempt_';
+const questions=[
+{section:'Mathematics-I',text:'If sin θ = 3/5, where θ is acute, then tan θ equals:',entry:'entry.334809569',options:['3/4','4/3','3/5','5/4']},
+{section:'Mathematics-I',text:'sin 30° + cos 60° equals:',entry:'entry.22393482',options:['0','1/2','1','√3']},
+{section:'Mathematics-I',text:'The roots of x² − 7x + 12 = 0 are:',entry:'entry.596814567',options:['2 and 6','3 and 4','−3 and −4','1 and 12']},
+{section:'Mathematics-I',text:'For A = [[1,2],[3,4]], the determinant is:',entry:'entry.1883047141',options:['2','−2','10','−10']},
+{section:'Mathematics-I',text:'log₁₀ 1000 equals:',entry:'entry.1766947892',options:['2','3','10','100']},
+{section:'Mathematics-I',text:'The slope of 2x + 3y − 6 = 0 is:',entry:'entry.599899070',options:['2/3','−2/3','3/2','−3/2']},
+{section:'Mathematics-I',text:'The derivative of x³ + 2x² − 5x + 1 is:',entry:'entry.1924553848',options:['3x² + 4x − 5','3x² + 2x − 5','x² + 4x − 5','3x + 4x² − 5']},
+{section:'Mathematics-I',text:'lim(x→0) sin x / x, with x in radians, equals:',entry:'entry.496018502',options:['0','1','∞','−1']},
+{section:'Mathematics-I',text:'Distance between (1,2) and (4,6) is:',entry:'entry.1525199714',options:['3','4','5','7']},
+{section:'Mathematics-I',text:'∫ 2x dx equals:',entry:'entry.506783438',options:['2x² + C','x² + C','x + C','2 + C']},
+{section:'Applied Physics-I',text:'The dimensional formula of force is:',entry:'entry.1366766426',options:['[MLT⁻¹]','[MLT⁻²]','[ML²T⁻²]','[ML⁻¹T⁻²]']},
+{section:'Applied Physics-I',text:'The SI unit of force is:',entry:'entry.1299942415',options:['Watt','Newton','Joule','Pascal']},
+{section:'Applied Physics-I',text:'Velocity changes from 10 m/s to 30 m/s in 5 seconds. Average acceleration is:',entry:'entry.1206999344',options:['2 m/s²','4 m/s²','5 m/s²','8 m/s²']},
+{section:'Applied Physics-I',text:'If mass doubles and velocity stays constant, kinetic energy becomes:',entry:'entry.1322917018',options:['Half','Double','Four times','Unchanged']},
+{section:'Applied Physics-I',text:'The SI unit of power is:',entry:'entry.1769629759',options:['Joule','Watt','Newton','Ampere']},
+{section:'Applied Physics-I',text:'Approximate acceleration due to gravity near Earth is:',entry:'entry.530468591',options:['4.9 m/s²','8.9 m/s²','9.8 m/s²','98 m/s²']},
+{section:'Applied Physics-I',text:'For an ideal simple pendulum with unchanged length and gravity, which remains constant?',entry:'entry.1027388523',options:['Amplitude under all conditions','Time period','Bob speed at every point','Kinetic energy at every point']},
+{section:'Applied Physics-I',text:'The SI unit of the coefficient of linear expansion is:',entry:'entry.178344399',options:['K','K⁻¹','m/K','m²/K']},
+{section:'Applied Physics-I',text:'A force of 200 N acts on an area of 4 m². Pressure is:',entry:'entry.503311306',options:['25 Pa','50 Pa','100 Pa','800 Pa']},
+{section:'Applied Physics-I',text:'Which heat-transfer mode can occur through a vacuum?',entry:'entry.649112057',options:['Conduction only','Convection only','Radiation only','Conduction and convection only']},
+{section:'Applied Chemistry',text:'Atomic number equals the number of:',entry:'entry.1095277125',options:['Neutrons','Protons','Nucleons','Protons and neutrons combined']},
+{section:'Applied Chemistry',text:'Which subatomic particle has no electric charge?',entry:'entry.618963461',options:['Proton','Neutron','Electron','Alpha particle']},
+{section:'Applied Chemistry',text:'A bond generally formed by transfer of electrons is:',entry:'entry.324106549',options:['Covalent','Ionic','Metallic','Hydrogen']},
+{section:'Applied Chemistry',text:'The pH of a neutral aqueous solution at 25°C is approximately:',entry:'entry.342354711',options:['0','5','7','14']},
+{section:'Applied Chemistry',text:'Which is a strong acid in aqueous solution?',entry:'entry.125777273',options:['HCl','CH₃COOH','H₂CO₃','H₂O']},
+{section:'Applied Chemistry',text:'Approximate molar mass of water (H₂O) is:',entry:'entry.1324126151',options:['16 g/mol','17 g/mol','18 g/mol','20 g/mol']},
+{section:'Applied Chemistry',text:'Rusting of iron generally requires:',entry:'entry.1502000570',options:['Oxygen only','Water only','Oxygen and moisture','Nitrogen and sunlight']},
+{section:'Applied Chemistry',text:'Which is a noble gas?',entry:'entry.270602150',options:['Chlorine','Sodium','Argon','Hydrogen']},
+{section:'Applied Chemistry',text:'Coating iron with zinc to prevent corrosion is called:',entry:'entry.1223124202',options:['Distillation','Galvanization','Sublimation','Neutralization']},
+{section:'Applied Chemistry',text:'Moles of solute per kilogram of solvent is called:',entry:'entry.253034109',options:['Molality','Molarity','Mass percentage','Normality']},
+{section:'Applied Chemistry',text:'For N₂O₄(g) ⇌ 2NO₂(g), initially 1 mole N₂O₄ is taken in a 1 L vessel. At 298 K, degree of dissociation is 50%. Given R = 0.0821 L·atm·mol⁻¹·K⁻¹, what is Kp?',entry:'entry.80102606',options:['A) 12.2 atm','B) 24.4 atm','C) 36.6 atm','D) 48.8 atm']}
+];
+const questionsNode=document.getElementById('questions');
+let currentSection='';
+questions.forEach((q,i)=>{
+ if(q.section!==currentSection){currentSection=q.section;const h=document.createElement('h2');h.textContent=currentSection;questionsNode.appendChild(h);}
+ const card=document.createElement('article');card.className='q';
+ const title=document.createElement('h3');title.textContent=`Q${i+1}. ${q.text}`;card.appendChild(title);
+ const opts=document.createElement('div');opts.className='opts';
+ q.options.forEach((opt,j)=>{const label=document.createElement('label');label.className='opt';const radio=document.createElement('input');radio.type='radio';radio.name=q.entry;radio.value=opt;const span=document.createElement('span');span.textContent=`${String.fromCharCode(65+j)}) ${opt}`;label.append(radio,span);opts.appendChild(label);});
+ card.appendChild(opts);questionsNode.appendChild(card);
+});
+let startedAt=0, seconds=3600, submitted=false, hideCount=0, timerId=null;
+const rollInput=document.getElementById('roll'), startBtn=document.getElementById('start'), form=document.getElementById('examForm'), timer=document.getElementById('timer'), notice=document.getElementById('startNotice');
+function duration(n){const h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=n%60;return [h,m,s].map(v=>String(v).padStart(2,'0')).join(':');}
+function startExam(){
+ const roll=rollInput.value.trim();if(!roll){notice.hidden=false;notice.textContent='Please enter your roll number first.';return;}
+ const key=ATTEMPT_PREFIX+roll.toLowerCase();const prior=localStorage.getItem(key);
+ if(prior==='submitted'||prior==='disqualified'){notice.hidden=false;notice.textContent='This roll number already has an attempt recorded in this browser. Contact the exam administrator.';return;}
+ localStorage.setItem(key,'in-progress');startedAt=Date.now();form.hidden=false;timer.hidden=false;rollInput.disabled=true;startBtn.disabled=true;notice.hidden=true;form.scrollIntoView({behavior:'smooth'});
+ timerId=setInterval(()=>{seconds=Math.max(0,seconds-1);timer.textContent='Time left: '+duration(seconds);if(seconds===0)submitExam('time-expired');},1000);
+}
+async function submitExam(reason){
+ if(submitted||!startedAt)return;submitted=true;clearInterval(timerId);document.getElementById('submit').disabled=true;
+ const elapsed=Math.max(0,Math.floor((Date.now()-startedAt)/1000));
+ const body=new URLSearchParams();
+ body.append(ROLL_ENTRY,`${rollInput.value.trim()} | Submitted in ${duration(elapsed)} | ${reason}`);
+ questions.forEach(q=>{const selected=form.querySelector(`input[name="${q.entry}"]:checked`);if(selected)body.append(q.entry,selected.value);});
+ try{
+  await fetch(FORM_RESPONSE_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString()});
+  localStorage.setItem(ATTEMPT_PREFIX+rollInput.value.trim().toLowerCase(),hideCount>=2?'disqualified':'submitted');
+  form.hidden=true;document.querySelector('.hero').hidden=true;document.getElementById('result').hidden=false;
+  document.getElementById('elapsed').textContent=`Elapsed time: ${duration(elapsed)}. Reason: ${reason}.`;
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+ }catch(e){
+  submitted=false;document.getElementById('submit').disabled=false;
+  notice.hidden=false;notice.textContent='Submission could not be confirmed. Keep this page open and contact the exam administrator.';
+ }
+}
+startBtn.addEventListener('click',startExam);
+form.addEventListener('submit',e=>{e.preventDefault();if(!confirm('Submit your examination now?'))return;submitExam('student-submitted');});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&startedAt&&!submitted){hideCount++;submitExam('page-hidden-or-minimized');}});
+</script>
+</body>
+</html>
