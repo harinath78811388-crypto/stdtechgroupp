@@ -41,6 +41,7 @@ import {
   JobItem,
   CertificateItem,
 } from './types';
+
 import {
   initialServices,
   initialProducts,
@@ -48,7 +49,6 @@ import {
   initialCourses,
   initialBlogPosts,
   initialJobs,
-  initialCertificates,
 } from './data/initialData';
 
 export default function App() {
@@ -77,16 +77,23 @@ export default function App() {
   // Modals
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
-  const [selectedJobToApply, setSelectedJobToApply] = useState<JobItem | null>(null);
-  const [activeCertificateModal, setActiveCertificateModal] = useState<CertificateItem | null>(null);
-  const [activeCourseToEnroll, setActiveCourseToEnroll] = useState<CourseItem | null>(null);
+  const [selectedJobToApply, setSelectedJobToApply] =
+    useState<JobItem | null>(null);
+  const [activeCertificateModal, setActiveCertificateModal] =
+    useState<CertificateItem | null>(null);
+  const [activeCourseToEnroll, setActiveCourseToEnroll] =
+    useState<CourseItem | null>(null);
 
   // Background & Aesthetic Theme State
-  // Default: 'mint-pink-white' ("mint green aur 🩷 white ka mixture")
-  const [theme, setTheme] = useState<'mint-pink-white' | 'mint-white' | 'dark'>(() => {
+  const [theme, setTheme] = useState<
+    'mint-pink-white' | 'mint-white' | 'dark'
+  >(() => {
     try {
       const saved = localStorage.getItem('stdtech_theme');
-      return saved === 'mint-pink-white' || saved === 'mint-white' || saved === 'dark'
+
+      return saved === 'mint-pink-white' ||
+        saved === 'mint-white' ||
+        saved === 'dark'
         ? saved
         : 'mint-pink-white';
     } catch {
@@ -94,8 +101,11 @@ export default function App() {
     }
   });
 
-  const handleThemeChange = (newTheme: 'mint-pink-white' | 'mint-white' | 'dark') => {
+  const handleThemeChange = (
+    newTheme: 'mint-pink-white' | 'mint-white' | 'dark'
+  ) => {
     setTheme(newTheme);
+
     try {
       localStorage.setItem('stdtech_theme', newTheme);
     } catch {}
@@ -105,25 +115,62 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [srvRes, prdRes, prjRes, crsRes, blgRes, jobRes] = await Promise.allSettled([
-          fetch('/api/services').then((r) => (r.ok ? r.json() : initialServices)),
-          fetch('/api/products').then((r) => (r.ok ? r.json() : initialProducts)),
-          fetch('/api/projects').then((r) => (r.ok ? r.json() : initialProjects)),
-          fetch('/api/courses').then((r) => (r.ok ? r.json() : initialCourses)),
-          fetch('/api/blog').then((r) => (r.ok ? r.json() : initialBlogPosts)),
-          fetch('/api/jobs').then((r) => (r.ok ? r.json() : initialJobs)),
+        const [
+          srvRes,
+          prdRes,
+          prjRes,
+          crsRes,
+          blgRes,
+          jobRes,
+        ] = await Promise.allSettled([
+          fetch('/api/services').then((r) =>
+            r.ok ? r.json() : initialServices
+          ),
+          fetch('/api/products').then((r) =>
+            r.ok ? r.json() : initialProducts
+          ),
+          fetch('/api/projects').then((r) =>
+            r.ok ? r.json() : initialProjects
+          ),
+          fetch('/api/courses').then((r) =>
+            r.ok ? r.json() : initialCourses
+          ),
+          fetch('/api/blog').then((r) =>
+            r.ok ? r.json() : initialBlogPosts
+          ),
+          fetch('/api/jobs').then((r) =>
+            r.ok ? r.json() : initialJobs
+          ),
         ]);
 
-        if (srvRes.status === 'fulfilled' && srvRes.value?.length) setServices(srvRes.value);
-        if (prdRes.status === 'fulfilled' && prdRes.value?.length) setProducts(prdRes.value);
-        if (prjRes.status === 'fulfilled' && prjRes.value?.length) setProjects(prjRes.value);
-        if (crsRes.status === 'fulfilled' && crsRes.value?.length) setCourses(crsRes.value);
-        if (blgRes.status === 'fulfilled' && blgRes.value?.length) setBlogPosts(blgRes.value);
-        if (jobRes.status === 'fulfilled' && jobRes.value?.length) setJobs(jobRes.value);
+        if (srvRes.status === 'fulfilled' && srvRes.value?.length) {
+          setServices(srvRes.value);
+        }
+
+        if (prdRes.status === 'fulfilled' && prdRes.value?.length) {
+          setProducts(prdRes.value);
+        }
+
+        if (prjRes.status === 'fulfilled' && prjRes.value?.length) {
+          setProjects(prjRes.value);
+        }
+
+        if (crsRes.status === 'fulfilled' && crsRes.value?.length) {
+          setCourses(crsRes.value);
+        }
+
+        if (blgRes.status === 'fulfilled' && blgRes.value?.length) {
+          setBlogPosts(blgRes.value);
+        }
+
+        if (jobRes.status === 'fulfilled' && jobRes.value?.length) {
+          setJobs(jobRes.value);
+        }
       } catch (err) {
         console.warn('Using local pre-seeded data:', err);
       }
     };
+
     fetchData();
   }, []);
 
@@ -131,6 +178,7 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.replace(/^\/+/, '');
+
       if (!path) {
         setCurrentPage('home');
         setPageParam('');
@@ -156,8 +204,12 @@ export default function App() {
     };
 
     handlePopState();
+
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   const navigateTo = (page: string, param: string = '') => {
@@ -165,25 +217,32 @@ export default function App() {
     setPageParam(param);
 
     let url = '/';
+
     if (page === 'home') url = '/';
     else if (page === 'service-detail') url = `/service/${param}`;
     else if (page === 'product-detail') url = `/product/${param}`;
     else if (page === 'training-detail') url = `/course/${param}`;
     else if (page === 'blog-detail') url = `/blog/${param}`;
-    else if (page === 'verify-cert') url = param ? `/verify/${param}` : '/verify';
-    else url = `/${page}`;
+    else if (page === 'verify-cert') {
+      url = param ? `/verify/${param}` : '/verify';
+    } else {
+      url = `/${page}`;
+    }
 
     try {
       window.history.pushState({}, '', url);
     } catch (e) {
       // In sandbox iframe history might be restricted
     }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleLoginSuccess = (user: User) => {
     setCurrentUser(user);
+
     localStorage.setItem('stdtech_user', JSON.stringify(user));
+
     setIsAuthModalOpen(false);
 
     // Auto navigate to their dedicated dashboard
@@ -195,11 +254,15 @@ export default function App() {
 
   const handleLogout = () => {
     setCurrentUser(null);
+
     localStorage.removeItem('stdtech_user');
+
     navigateTo('home');
   };
 
-  const handleQuickRoleSwitch = (role: 'admin' | 'student' | 'staff' | 'customer') => {
+  const handleQuickRoleSwitch = (
+    role: 'admin' | 'student' | 'staff' | 'customer'
+  ) => {
     const demoAccounts: Record<string, User> = {
       admin: {
         id: 'usr-admin-01',
@@ -208,6 +271,7 @@ export default function App() {
         role: 'admin',
         createdAt: '2026-01-01',
       },
+
       student: {
         id: 'usr-student-01',
         email: 'rahul.kumar@student.stdtechgroup.com',
@@ -215,6 +279,7 @@ export default function App() {
         role: 'student',
         createdAt: '2026-01-15',
       },
+
       staff: {
         id: 'usr-staff-01',
         email: 'staff.eng@stdtechgroup.com',
@@ -222,6 +287,7 @@ export default function App() {
         role: 'staff',
         createdAt: '2026-01-01',
       },
+
       customer: {
         id: 'usr-client-01',
         email: 'enterprise@apexclient.com',
@@ -232,7 +298,9 @@ export default function App() {
     };
 
     const targetUser = demoAccounts[role];
+
     setCurrentUser(targetUser);
+
     localStorage.setItem('stdtech_user', JSON.stringify(targetUser));
 
     if (role === 'admin') navigateTo('dashboard-admin');
@@ -247,18 +315,286 @@ export default function App() {
     <div
       data-theme={theme}
       className={`min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'text-slate-900'
+        theme === 'dark'
+          ? 'bg-slate-950 text-slate-100'
+          : 'text-slate-900'
       }`}
     >
-      <div style={{background:'linear-gradient(90deg,#d9fff0,#ffe5f2)',borderBottom:'1px solid #b9e7d8',padding:'10px 16px',textAlign:'center',position:'relative',zIndex:40}}>
-        <a href="/exam.html" style={{display:'inline-block',background:'#17677c',color:'#fff',fontWeight:900,padding:'10px 22px',borderRadius:999,textDecoration:'none',boxShadow:'0 5px 16px #17677c33'}}>
-          Click Here for Starting Examination →
+      {/* Examination Buttons: First Year & Second Year */}
+      <div
+        style={{
+          background: 'linear-gradient(90deg,#d9fff0,#ffe5f2)',
+          borderBottom: '1px solid #b9e7d8',
+          padding: '14px 16px',
+          textAlign: 'center',
+          position: 'relative',
+          zIndex: 40,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '12px',
+          flexWrap: 'wrap',
+        }}
+      >
+        {/* First Year Examination */}
+        <a
+          href="/exam.html"
+          style={{
+            display: 'inline-block',
+            background: '#17677c',
+            color: '#fff',
+            fontWeight: 900,
+            padding: '10px 22px',
+            borderRadius: 999,
+            textDecoration: 'none',
+            boxShadow: '0 5px 16px #17677c33',
+          }}
+        >
+          1st Year Examination →
+        </a>
+
+        {/* Second Year Examination */}
+        <a
+          href="/exam-2year.html"
+          style={{
+            display: 'inline-block',
+            background: '#db2777',
+            color: '#fff',
+            fontWeight: 900,
+            padding: '10px 22px',
+            borderRadius: 999,
+            textDecoration: 'none',
+            boxShadow: '0 5px 16px #db277733',
+          }}
+        >
+          2nd Year Examination →
         </a>
       </div>
+
       {/* Navigation Header */}
       <Navbar
         currentPage={currentPage}
         onNavigate={navigateTo}
+        currentUser={currentUser}
+        onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        onOpenApplyModal={() => {
+          setSelectedJobToApply(null);
+          setIsApplyModalOpen(true);
+        }}
+        onLogout={handleLogout}
+        onQuickRoleSwitch={handleQuickRoleSwitch}
+        theme={theme}
+        onThemeChange={handleThemeChange}
+      />
+
+      {/* Main Content Area */}
+      <main className="flex-grow">
+        {/* Public Pages */}
+        {currentPage === 'home' && (
+          <HomePage
+            services={services}
+            products={products}
+            projects={projects}
+            courses={courses}
+            blogPosts={blogPosts}
+            onNavigate={navigateTo}
+            onOpenApplyModal={() => {
+              setSelectedJobToApply(null);
+              setIsApplyModalOpen(true);
+            }}
+          />
+        )}
+
+        {currentPage === 'about' && (
+          <AboutPage
+            onNavigate={navigateTo}
+            onOpenApplyModal={() => {
+              setSelectedJobToApply(null);
+              setIsApplyModalOpen(true);
+            }}
+          />
+        )}
+
+        {currentPage === 'leadership' && (
+          <LeadershipPage
+            onNavigate={navigateTo}
+            onOpenApplyModal={() => {
+              setSelectedJobToApply(null);
+              setIsApplyModalOpen(true);
+            }}
+          />
+        )}
+
+        {(currentPage === 'services' ||
+          currentPage === 'service-detail') && (
+          <ServicesPage
+            services={services}
+            selectedServiceSlug={
+              currentPage === 'service-detail' ? pageParam : undefined
+            }
+            onNavigate={navigateTo}
+          />
+        )}
+
+        {(currentPage === 'products' ||
+          currentPage === 'product-detail') && (
+          <ProductsPage
+            products={products}
+            selectedProductSlug={
+              currentPage === 'product-detail' ? pageParam : undefined
+            }
+            onNavigate={navigateTo}
+          />
+        )}
+
+        {(currentPage === 'portfolio' ||
+          currentPage === 'portfolio-detail') && (
+          <PortfolioPage
+            projects={projects}
+            selectedProjectSlug={
+              currentPage === 'portfolio-detail' ? pageParam : undefined
+            }
+            onNavigate={navigateTo}
+          />
+        )}
+
+        {(currentPage === 'training' ||
+          currentPage === 'training-detail') && (
+          <TrainingPage
+            courses={courses}
+            selectedCourseSlug={
+              currentPage === 'training-detail' ? pageParam : undefined
+            }
+            onNavigate={navigateTo}
+            onEnroll={(course) => setActiveCourseToEnroll(course)}
+          />
+        )}
+
+        {currentPage === 'solutions' && (
+          <SolutionsPage onNavigate={navigateTo} />
+        )}
+
+        {currentPage === 'technologies' && (
+          <TechnologiesPage onNavigate={navigateTo} />
+        )}
+
+        {currentPage === 'industries' && (
+          <IndustriesPage onNavigate={navigateTo} />
+        )}
+
+        {currentPage === 'careers' && (
+          <CareersPage
+            jobs={jobs}
+            onApplyForJob={(job) => {
+              setSelectedJobToApply(job);
+              setIsApplyModalOpen(true);
+            }}
+          />
+        )}
+
+        {(currentPage === 'blog' ||
+          currentPage === 'blog-detail') && (
+          <BlogPage
+            blogPosts={blogPosts}
+            selectedBlogSlug={
+              currentPage === 'blog-detail' ? pageParam : undefined
+            }
+            onNavigate={navigateTo}
+          />
+        )}
+
+        {currentPage === 'contact' && (
+          <ContactPage initialSubject={pageParam} />
+        )}
+
+        {currentPage === 'verify-cert' && (
+          <CertificateVerificationView
+            initialCertId={pageParam || 'STDT-2026-00001'}
+            onViewCertificateModal={(cert) =>
+              setActiveCertificateModal(cert)
+            }
+          />
+        )}
+
+        {currentPage === 'privacy-policy' && <PrivacyPolicyPage />}
+
+        {currentPage === 'terms' && <TermsPage />}
+
+        {/* Dedicated Role-Based Dashboards */}
+        {currentPage === 'dashboard-admin' && (
+          <AdminDashboard
+            onOpenCertificateModal={(cert: CertificateItem) =>
+              setActiveCertificateModal(cert)
+            }
+          />
+        )}
+
+        {currentPage === 'dashboard-student' && (
+          <StudentDashboard
+            currentUser={currentUser}
+            onOpenCertificateModal={(cert: CertificateItem) =>
+              setActiveCertificateModal(cert)
+            }
+            onExploreCourses={() => navigateTo('training')}
+          />
+        )}
+
+        {currentPage === 'dashboard-staff' && (
+          <StaffDashboard
+            currentUser={currentUser}
+            onOpenCertificateModal={(cert: CertificateItem) =>
+              setActiveCertificateModal(cert)
+            }
+          />
+        )}
+
+        {currentPage === 'dashboard-customer' && (
+          <CustomerDashboard
+            currentUser={currentUser}
+            onRequestProject={() =>
+              navigateTo('contact', 'New Enterprise Project Request')
+            }
+          />
+        )}
+      </main>
+
+      {/* Footer */}
+      <Footer onNavigate={navigateTo} />
+
+      {/* GLOBAL MODALS */}
+      {isAuthModalOpen && (
+        <AuthModal
+          onClose={() => setIsAuthModalOpen(false)}
+          onSuccess={handleLoginSuccess}
+        />
+      )}
+
+      {isApplyModalOpen && (
+        <ApplyModal
+          job={selectedJobToApply}
+          onClose={() => {
+            setIsApplyModalOpen(false);
+            setSelectedJobToApply(null);
+          }}
+        />
+      )}
+
+      {activeCertificateModal && (
+        <CertificateModal
+          certificate={activeCertificateModal}
+          onClose={() => setActiveCertificateModal(null)}
+        />
+      )}
+
+      {activeCourseToEnroll && (
+        <EnrollModal
+          course={activeCourseToEnroll}
+          onClose={() => setActiveCourseToEnroll(null)}
+        />
+      )}
+    </div>
+  );
+  }teTo}
         currentUser={currentUser}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
         onOpenApplyModal={() => {
