@@ -61,7 +61,7 @@ export default function FounderCard({
       team: 'AI & Machine Learning Department',
       focus: 'AI-Based Student Performance Prediction System',
       image: '/images/team/shivam-shonkar.png'
-    }
+    },
     {
       name: 'Deekshith R Verma',
       branch: 'Forex Treading expert',
