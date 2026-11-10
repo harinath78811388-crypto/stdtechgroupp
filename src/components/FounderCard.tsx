@@ -65,9 +65,9 @@ export default function FounderCard({
     {
       name: 'Deekshith R Verma',
       branch: 'Forex Treading',
-      year: '2 year Experiance',
-      role: 'Forex Treading and Risk management export',
-      team: 'Forex treading & Risk Management',
+      year: '2 Year Experiance',
+      role: 'Forex Treading and Risk Management Export',
+      team: 'Forex Treading & Risk Management',
       image: '/images/team/Deekshith.png'
     }
   ];
